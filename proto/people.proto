@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package goprotobuf;
+
+import "pagination.proto";
+import "house.proto";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "pb/people";
+
+message GetPeopleRequest {
+    string id = 1;
+}
+
+message DeletePeopleResponse {
+    string id = 1;
+}
+
+message ListPeopleRequest {}
+
+message Peoples {
+    Pagination pagination = 1;
+    repeated People data = 2;
+}
+
+
+message People {
+    uint64 id = 1;
+    string name = 2;
+    uint32 age = 3;
+    double loan = 4;
+    Gender gender = 5;
+    House house = 6;
+    google.protobuf.Timestamp last_updated = 7;
+}
+
+message Gender {
+    enum gender {
+        UNKNOWN = 0;
+        MALE = 1;
+        FEMALE = 2;
+    }
+    uint64 id = 1;
+    gender name = 2;
+}
+
+message Id {
+    uint32 id = 1;
+}
+
+message Empty{}
+
+message Status {
+    uint32 status = 1;
+}
+
+message Page {
+    optional int64 page = 1;
+}
+
+service ProductService {
+    rpc CreateProduct(People) returns (People);
+    rpc GetProduct(GetPeopleRequest) returns (People);
+    rpc GetProducts(ListPeopleRequest) returns (stream Peoples);
+    rpc UpdateProduct(People) returns (People);
+    rpc DeleteProduct(GetPeopleRequest) returns (DeletePeopleResponse);
+}

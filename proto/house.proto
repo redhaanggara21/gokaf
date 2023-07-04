@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package goprotobuf;
+
+option go_package = "pb/house";
+
+message House {
+    string id = 1;
+    string address = 2;
+    uint32 unit = 3;
+    oneof dimension {
+        double long = 4;
+        double wide = 5;
+    };
+}
+
+
+
